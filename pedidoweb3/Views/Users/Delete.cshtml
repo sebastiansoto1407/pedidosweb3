@@ -1,0 +1,30 @@
+﻿@model pedidoweb3.Models.User
+@{
+    ViewData["Title"] = "Eliminar usuario";
+}
+
+<h1 class="text-danger">@ViewData["Title"]</h1>
+<h5>¿Confirma eliminar este usuario?</h5>
+
+<div class="card my-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Rol</dt>
+            <dd class="col-sm-9"><span class="badge bg-secondary text-uppercase">@Model.Rol</span></dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

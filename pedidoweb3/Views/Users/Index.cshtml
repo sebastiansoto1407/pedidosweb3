@@ -1,0 +1,36 @@
+﻿@model IEnumerable<pedidoweb3.Models.User>
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<h1 class="mb-3">Usuarios</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Crear nuevo</a>
+</p>
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Nombre)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Rol)</th>
+            <th style="width: 180px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Email</td>
+                <td><span class="badge bg-secondary text-uppercase">@item.Rol</span></td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
