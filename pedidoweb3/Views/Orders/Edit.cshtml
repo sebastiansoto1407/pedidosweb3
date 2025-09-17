@@ -1,0 +1,23 @@
+﻿@model pedidoweb3.Models.Order
+@{
+    ViewData["Title"] = "Editar pedido";
+}
+
+<h1>@ViewData["Title"] #@Model.Id</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <select name="estado" class="form-select">
+            @foreach (var e in Enum.GetValues(typeof(pedidoweb3.Models.OrderStatus)))
+            {
+                <option value="@e" selected="@(Model.Estado.ToString() == e.ToString())">@e</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">Cancelar</a>
+</form>

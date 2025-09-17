@@ -1,0 +1,41 @@
+﻿@model pedidoweb3.Models.Order
+@{
+    ViewData["Title"] = "Detalles del pedido";
+}
+
+<h1>@ViewData["Title"] #@Model.Id</h1>
+
+<p><strong>Cliente:</strong> @Model.Cliente?.Nombre (@Model.Cliente?.Email)</p>
+<p><strong>Fecha:</strong> @Model.Fecha.ToLocalTime()</p>
+<p><strong>Estado:</strong> <span class="badge bg-secondary">@Model.Estado</span></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th class="text-end">Cantidad</th>
+            <th class="text-end">Precio</th>
+            <th class="text-end">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var it in Model.Items)
+        {
+            <tr>
+                <td>@it.Product?.Nombre</td>
+                <td class="text-end">@it.Cantidad</td>
+                <td class="text-end">@it.Product?.Precio.ToString("C")</td>
+                <td class="text-end">@it.Subtotal.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3" class="text-end">Total</th>
+            <th class="text-end">@Model.Total.ToString("C")</th>
+        </tr>
+    </tfoot>
+</table>
+
+<a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Cambiar estado</a>
+<a class="btn btn-secondary" asp-action="Index">Volver</a>

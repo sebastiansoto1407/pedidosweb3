@@ -1,0 +1,38 @@
+﻿@model IEnumerable<pedidoweb3.Models.Order>
+@{
+    ViewData["Title"] = "Pedidos";
+}
+
+<h1 class="mb-3">Pedidos</h1>
+
+<p><a class="btn btn-primary" asp-action="Create">Crear pedido</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th class="text-end">Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.Id</td>
+                <td>@o.Cliente?.Nombre</td>
+                <td>@o.Fecha.ToLocalTime()</td>
+                <td><span class="badge bg-secondary">@o.Estado</span></td>
+                <td class="text-end">@o.Total.ToString("C")</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@o.Id">Detalles</a>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@o.Id">Editar</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@o.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

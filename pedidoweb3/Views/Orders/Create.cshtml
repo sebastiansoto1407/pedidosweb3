@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Crear pedido";
+    var clientes = (IEnumerable<pedidoweb3.Models.User>)ViewBag.Clientes;
+    var productos = (IEnumerable<pedidoweb3.Models.Product>)ViewBag.Productos;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Cliente</label>
+        <select name="clienteId" class="form-select" required>
+            <option value="">-- Seleccione --</option>
+            @foreach (var c in clientes)
+            {
+                <option value="@c.Id">@c.Nombre (@c.Email)</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Producto</label>
+        <select name="productId" class="form-select" required>
+            <option value="">-- Seleccione --</option>
+            @foreach (var p in productos)
+            {
+                <option value="@p.Id">@p.Nombre (Stock: @p.Stock) - @p.Precio.ToString("C")</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Cantidad</label>
+        <input type="number" name="cantidad" class="form-control" min="1" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+    <a asp-action="Index" class="btn btn-secondary">Volver</a>
+</form>
