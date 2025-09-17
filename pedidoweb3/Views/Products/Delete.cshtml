@@ -1,0 +1,29 @@
+﻿@model pedidoweb3.Models.Product
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+<h1 class="text-danger">@ViewData["Title"]</h1>
+<h5>¿Confirma eliminar este producto?</h5>
+
+<div class="card my-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nombre</dt>
+            <dd class="col-sm-9">@Model.Nombre</dd>
+
+            <dt class="col-sm-3">Precio</dt>
+            <dd class="col-sm-9">@Model.Precio.ToString("C")</dd>
+
+            <dt class="col-sm-3">Stock</dt>
+            <dd class="col-sm-9">@Model.Stock</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

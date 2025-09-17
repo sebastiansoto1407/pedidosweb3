@@ -1,0 +1,68 @@
+﻿@model IEnumerable<pedidoweb3.Models.Product>
+@{
+    ViewData["Title"] = "Productos";
+    var categorias = (IEnumerable<string>)(ViewBag.Categorias ?? new List<string>());
+    bool puedeGestionar = User.IsInRole("admin") || User.IsInRole("empleado");
+}
+
+<h1 class="mb-3">Productos</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-3">
+        <input type="text" name="q" value="@Context.Request.Query["q"]" class="form-control" placeholder="Buscar por nombre o descripción" />
+    </div>
+    <div class="col-md-3">
+        <select name="categoria" class="form-select">
+            <option value="">-- Todas las categorías --</option>
+            @foreach (var c in categorias)
+            {
+                <option value="@c" selected="@(Context.Request.Query["categoria"] == c)">@c</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2"><input type="number" step="0.01" name="min" value='@Context.Request.Query["min"]' class="form-control" placeholder="Precio min" /></div>
+    <div class="col-md-2"><input type="number" step="0.01" name="max" value='@Context.Request.Query["max"]' class="form-control" placeholder="Precio max" /></div>
+    <div class="col-md-2"><button class="btn btn-outline-primary w-100">Filtrar</button></div>
+</form>
+
+@if (puedeGestionar)
+{
+    <p><a class="btn btn-primary" asp-action="Create">Crear nuevo</a></p>
+}
+
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Categoría</th>
+            <th class="text-end">Precio</th>
+            <th class="text-end">Stock</th>
+            <th style="width:220px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Categoria</td>
+                <td class="text-end">@item.Precio.ToString("C")</td>
+                <td class="text-end">
+                    @item.Stock
+                    @if (item.Stock <= 5)
+                    {
+                        <span class="badge bg-warning text-dark ms-2">Bajo</span>
+                    }
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalles</a>
+                    @if (puedeGestionar)
+                    {
+                        <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                        <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
